@@ -1,5 +1,6 @@
 from PIL import Image
-im = Image.open("wykres.jpg")
+im = Image.open("wykres.bmp")
 pix = im.load()
 print im.size
-print pix[0,0]
+
+
