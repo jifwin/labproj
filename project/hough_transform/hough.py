@@ -86,24 +86,31 @@ cv2.line(img,(osx,0),(osx,osy),(0,0,255),2)
 cv2.line(img,(osx,osy),(img.shape[1],osy),(0,0,255),2)
 cv2.imwrite('houghlines3.jpg',img)
 
-#cv2.imshow('image',gray)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
+cv2.imshow('image',gray)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 #mozliwosc korekcji dolnej krawedzi
 
 #ocr na legende i osie
 
-minimum_line = 0
+minimum_line_y = 0
 minimum_value = 0
 
 #poziome
 
 for [i, item] in enumerate(gray[:]):
-    print str(i) + ": " + str(item) + "suma: " + str(sum(item)) #czyli to wypisuje w poziomie?
+    #print str(i) + ": " + str(item) + "suma: " + str(sum(item)) #czyli to wypisuje w poziomie?
     if minimum_value == 0 or sum(item) < minimum_value:
         minimum_value = sum(item)
-        minimum_line = i
+        minimum_line_y = i
 
-print minimum_value #no i to wykrylo poprawna krawedz, teraz zrobic kryterium na 2 metody i wybrac prawidlowa
-print minimum_line
+#print minimum_value #no i to wykrylo poprawna krawedz, teraz zrobic kryterium na 2 metody i wybrac prawidlowa
+print minimum_line_y
+print osy
+
+if int(minimum_line_y) == int(osy):
+    print 'OSY zgadza sie!'
+else:
+    print 'OSY nie zgadzaja sie!'
+
