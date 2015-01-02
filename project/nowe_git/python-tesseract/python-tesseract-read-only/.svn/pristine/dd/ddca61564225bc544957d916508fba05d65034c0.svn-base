@@ -1,0 +1,52 @@
+#!/usr/bin/make -f
+DEB_PYTHON_SYSTEM=pysupport
+#include /usr/share/cdbs/1/rules/debhelper.mk
+#include /usr/share/cdbs/1/class/python-distutils.mk
+
+export PYTHONWARNINGS=d
+PYVERS := $(shell pyversions -r)
+PY3VERS := $(shell py3versions -r)
+
+%:
+	dh $@ --with python2,python3 --buildsystem=pybuild
+	export PYBUILD_NAME=tesseract
+
+override_dh_auto_build:
+# I need to build twice to play safe
+	set -ex; \
+	for python in $(PYVERS) $(PY3VERS); do \
+		$$python setup.py build; \
+		$$python setup.py build; \
+	done
+
+override_dh_auto_clean:
+	rm -rf build
+	dh_auto_clean
+
+override_dh_auto_install:
+	# Remove tests to not pollute namespace.
+	rm -rf  build/lib*/tesseract/tests
+
+	set -ex; \
+	for python in $(PYVERS); do \
+		$$python setup.py install --skip-build --root debian/python-tesseract \
+			--install-layout deb; \
+	done
+
+	set -ex; \
+	for python in $(PY3VERS); do \
+		$$python setup.py install --skip-build --root debian/python3-tesseract \
+			--install-layout deb; \
+	done
+
+override_dh_installchangelogs:
+	dh_installchangelogs RELEASES
+
+override_dh_auto_test:
+#ifeq "$(filter nocheck,$(DEB_BUILD_OPTIONS))" ""
+	## Run tests only for Python2 since upstream is using Beautiful Soup 3.
+	#set -e; \
+	#for python in $(PYVERS); do \
+		#$$python /usr/bin/nosetests; \
+	#done
+#endif

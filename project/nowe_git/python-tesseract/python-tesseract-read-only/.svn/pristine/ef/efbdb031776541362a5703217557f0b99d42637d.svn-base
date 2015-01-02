@@ -1,0 +1,35 @@
+Source: python-tesseract
+Maintainer: FreeToGo <FreeToGo@gmail.com>
+Section: python
+Priority: optional
+Build-Depends: python-setuptools (>= 0.6b3), python-all-dev (>= 2.6.6-3), debhelper (>= 7), libleptonica-dev (>=1.70), libtesseract-dev (>=3.03),  dh-buildinfo, dh-python, python3-all-dev
+Standards-Version: 3.9.5
+X-Python-Version: >= 2.7
+X-Python3-Version: >=3.4
+Homepage: http://code.google.com/p/python-tesseract/
+
+Package: python-tesseract
+Architecture: i386
+Depends:
+ ${misc:Depends},
+ ${python:Depends},
+ ${shlibs:Depends},
+Description: Tesseract for Python
+ Python-tesseract is a wrapper class for Tesseract OCR 
+ that allows any conventional image files (JPG, GIF, PNG,
+ TIFF and etc) to be read and decoded into readable 
+ languages. No temporary file will be created during the
+ OCR processing. 
+
+Package: python3-tesseract
+Architecture: i386
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends},
+Description: Tesseract for Python3
+ Python-tesseract is a wrapper class for Tesseract OCR 
+ that allows any conventional image files (JPG, GIF, PNG,
+ TIFF and etc) to be read and decoded into readable 
+ languages. No temporary file will be created during the
+ OCR processing. 
